@@ -18,4 +18,17 @@ class User < ApplicationRecord
 		format: { with: VALID_EMAIL_REGEX },
 		uniqueness: { case_sensitive: false }
 		)
+=begin
+	secure password using BCRYPT
+	includes: 
+		method that allows ability to save securely hashed password_digest attribute to DB
+		creation of virtual attributes password and password_confirmation
+		authenticate method that returns user when password is correct
+=end
+	has_secure_password
+	validates(
+		:password,
+		presence: true,
+		length: { minimum: 6 }
+		)
 end
