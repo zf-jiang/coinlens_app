@@ -48,7 +48,8 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: coinlens_app_production
-  username: coinlens_app
-  password: <%= ENV['COINLENS_APP_DATABASE_PASSWORD'] %>
+  #<<: *default
+  #database: coinlens_app_production
+  #username: coinlens_app
+  #password: <%= ENV['COINLENS_APP_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
