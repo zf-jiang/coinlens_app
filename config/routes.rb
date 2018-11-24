@@ -1,15 +1,11 @@
 Rails.application.routes.draw do
 
-  get 'users/new'
-  #root 'welcome#index'
-  root 'static_pages#home'
+  root    'static_pages#home'
 
   #static pages
-  get	'/about',		  to: 'static_pages#about'
-  get	'/features',	to: 'static_pages#features'
-  get	'/contact',		to: 'static_pages#contact'
-
-  get	'/login',		  to: 'static_pages#login'
+  get	    '/about',		  to: 'static_pages#about'
+  get	    '/features',	to: 'static_pages#features'
+  get	    '/contact',		to: 'static_pages#contact'
 
 =begin
   adds RESTful actions for Users resource and
@@ -26,9 +22,12 @@ Rails.application.routes.draw do
   PATCH           /users/:id      update      user_path(user)       update user
   DELETE          /users/:id      destroy     user_path(user)       delete user
 =end
-  get '/register',  to: 'users#new'
-  post'/register',  to: 'users#create'
+  get     '/register',  to: 'users#new'
+  post    '/register',  to: 'users#create'
+  #get    '/u/profile', to: 'users#show'
+  get     '/login',     to: 'sessions#new'
+  post    '/login',     to: 'sessions#create'
+  delete  '/logout',    to: 'sessions#destroy'
+
   resources :users, :path => "u"
-  #get '/u/profile', to: 'users#show'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

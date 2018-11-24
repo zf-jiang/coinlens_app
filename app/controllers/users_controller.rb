@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 					 password: "foobar", password_confirmation: "foobar")
 =end
   	if @user.save
+      log_in @user
   		flash[:success] = "Welcome to CoinLens!"
   		redirect_to @user 	#successful registration redirects user to profile
   	else
@@ -22,7 +23,7 @@ class UsersController < ApplicationController
   	@user = User.find(params[:id])	#find method converts string 'id' into type int
   end
 
-  #used to limit attributes submited in params[:user] to only include table attributes
+  #used to limit attributes submitted in params[:user] to only include table attributes
 private
   def user_params
   	params.require(:user).permit(:name, :email, :password, :password_confirmation)
