@@ -120,6 +120,14 @@ input {
 	}
 }
 
+#error_alert {
+	text-align: center;
+}
+
+.welcomemsg {
+	text-align: center;
+}
+
 .field_with_errors {
 	@extend .has-error;
 	.form-control {
