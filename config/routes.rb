@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'coins/new'
   root    'static_pages#home'
 
   #static pages
