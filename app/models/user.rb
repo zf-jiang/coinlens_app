@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :transactions
+  
   #callback to downcase email before saving to user.email
   before_save { self.email = email.downcase }
 	

@@ -22,12 +22,16 @@ Rails.application.routes.draw do
   PATCH           /users/:id      update      user_path(user)       update user
   DELETE          /users/:id      destroy     user_path(user)       delete user
 =end
+  resources :users do
+    resources :transactions, :controller => 'transactions'
+  end 
+
   get     '/register',  to: 'users#new'
   post    '/register',  to: 'users#create'
-  #get    '/u/profile', to: 'users#show'
   get     '/login',     to: 'sessions#new'
   post    '/login',     to: 'sessions#create'
   delete  '/logout',    to: 'sessions#destroy'
+  get     'users/:user_id/portfolio', to: 'transactions#index'
 
-  resources :users, :path => "u"
+  #match ':controller(/:action(/:user_id(.:format)))', :via => :all
 end

@@ -1,3 +1,7 @@
+require 'uri'
+#require 'httparty'
+require 'json'
+
 class UsersController < ApplicationController
   def new
   	@user = User.new
