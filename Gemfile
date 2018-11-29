@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.12'
 gem 'httparty', '~> 0.16.3'
 gem 'chartkick', '~> 3.0.1'
-gem 'friendly_id', '~> 5.2.4'
+#gem 'friendly_id', '~> 5.2.4'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

@@ -31,7 +31,6 @@ Rails.application.routes.draw do
   get     '/login',     to: 'sessions#new'
   post    '/login',     to: 'sessions#create'
   delete  '/logout',    to: 'sessions#destroy'
-  get     'users/:user_id/portfolio', to: 'transactions#index'
-
+  #get     'users/:user_id/portfolio', to: 'transactions#index'
   #match ':controller(/:action(/:user_id(.:format)))', :via => :all
 end

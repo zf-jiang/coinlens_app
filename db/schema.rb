@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2018_11_29_060058) do
   create_table "transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "coin_id"
-    t.integer "amount"
+    t.float "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["coin_id"], name: "index_transactions_on_coin_id"

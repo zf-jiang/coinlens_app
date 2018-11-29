@@ -1,0 +1,44 @@
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+<%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+<% provide(:title, @coin_name) %>
+
+<div class="header">
+	<h1><%= @coin_name %> (<%= @coin_symbol %>)</h1>
+	<center><h7><%= link_to 'Back to Portfolio', :controller => 'transactions', :action => 'index' %></h7></center>
+</div>
+
+<div class="row">
+	<div class="column side">
+		<ul id="coin-info">
+			<li>Rank: <%= @rank %></li>
+			<li>Price (USD): <%= @price %></li>
+			<li>24H Change: <%= @day_change %>%</li>
+			<li>Current holdings: <%= @curr_holding %></li>
+			<li>Total value: <%= @value %></li>
+		</ul>
+		
+		<style>
+			div.tab-content{
+				width = 100%
+			}
+		</style>
+	</div>
+	
+	<div class="column middle">
+		<div class="container">
+			<ul class="nav nav-tabs nav-justified">
+				<li class="active"><a data-toggle="tab" href="#Weekly">Weekly</a></li>
+				<li><a data-toggle="tab" href="#Hourly">Hourly</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<div id="Weekly" class = "tab-pane fade in active">
+					<%= line_chart @histoday_arr, width: "1200px", height: "800px" %>
+				</div>
+				<div id="Hourly" class = "tab-pane fade in active">
+					<%= line_chart @histohour_arr, width: "1200px", height: "800px"%>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
