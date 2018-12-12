@@ -90,7 +90,7 @@ class TransactionsController < ApplicationController
   	@transaction = @user.transactions.find(params[:id])
 
   	if @transaction.update(transaction_params)
-  		flash[:success] = "Sucessfully updated your portfolio."
+  		flash[:success] = "Successfully updated your portfolio."
   		redirect_to :action => :index
   	else
   		flash.now[:danger] = "Amount cannot be blank."
