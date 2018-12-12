@@ -1,6 +1,6 @@
 # COINLENS APPLICATION
 
-Currently deployed via Heroku @ https://coinlens-app.herokuapp.com/
+Currently deployed via Heroku @ https://coinlens.herokuapp.com/
 
 Build version: 0.1  
 Ruby version: 2.5.1  
