@@ -24,14 +24,3 @@ response["data"].each do |d|
 end
 
 puts "CoinMarketCap API successfully seeded into database."
-
-=begin
-result = Net::HTTP.get(URI.parse('https://api.coinmarketcap.com/v2/ticker/?limit=100&structure=array'))
-json = JSON.parse(result)
-json['data'].each do |d|
-	Coin.create(
-		name: d['name'],
-		symbol: d['symbol']
-		)
-end
-=end
