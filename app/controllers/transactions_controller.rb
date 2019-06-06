@@ -7,6 +7,16 @@ class TransactionsController < ApplicationController
   
   def setevent
   	@user = User.find(params[:user_id])
+    @api_link = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+  end
+
+  # REST Api call
+  def pullApi(symbol)
+    response = HTTParty.get(
+      @api_link,
+      :query => {'symbol' => symbol}, 
+      :headers => {'X-CMC_PRO_API_KEY' => ENV["CMC_API_KEY"], 'Content-Type' => 'application/json'}
+    )
   end
 
   def index
@@ -15,11 +25,9 @@ class TransactionsController < ApplicationController
   	@txarray = Array.new
   	@transactions.each do |t|
   		coin_name = Coin.find(t.coin_id).name
-  		id = Coin.find(t.coin_id).web_id
-  		api_link = URI.join("https://api.coinmarketcap.com/v1/ticker/",id)
-  		response = HTTParty.get(api_link,
-                :headers =>{'Content-Type' => 'application/json'})
-  		price = response[0]["price_usd"]
+  		symbol = Coin.find(t.coin_id).symbol
+  		data = pullApi(symbol)
+  		price = data['data'][symbol]['quote']['USD']['price']
   		value = price.to_f * t.amount
   		@total = @total + value
   		transaction_arr = [coin_name, value]
@@ -48,13 +56,10 @@ class TransactionsController < ApplicationController
   	transaction = @user.transactions.find(params[:id])
   	@coin_name = Coin.find(transaction.coin_id).name
   	@coin_symbol = Coin.find(transaction.coin_id).symbol
-  	id = Coin.find(transaction.coin_id).web_id
-  	link = URI.join("https://api.coinmarketcap.com/v1/ticker/",id)
-  	@response = HTTParty.get(link,
-    		   :headers =>{'Content-Type' => 'application/json'})
-  	@rank = @response[0]["rank"]
-  	@price = @response[0]["price_usd"].to_f.round(2)
-  	@day_change = @response[0]["percent_change_24h"]
+    @data = pullApi(@coin_symbol)
+  	@rank = @data['data'][@coin_symbol]['cmc_rank']
+  	@price = @data['data'][@coin_symbol]['quote']['USD']['price'].to_f.round(2)
+  	@day_change = @data['data'][@coin_symbol]['quote']['USD']["percent_change_24h"]
   	@curr_holding = transaction.amount
   	@value = (@price * @curr_holding).round(2)
 

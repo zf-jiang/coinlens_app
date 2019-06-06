@@ -10,17 +10,25 @@ require 'httparty'
 require 'json'
 require 'uri'
 
-link = "https://api.coinmarketcap.com/v2/ticker/?limit=100&structure=array"
-#"https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
-response = HTTParty.get(link,
-	:headers => {#'X-CMC_PRO_API_KEY' => 'c98d923d-ca3c-4a2b-85a1-37b376a3aeda',
-				 'Content-Type' => 'application/json'})
-response["data"].each do |d|
-	Coin.create!(
-		name: d['name'],
-		symbol: d['symbol'],
-		web_id: d['website_slug']
+link = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info"
+pairings = File.read('db/pairings.txt').split("\n")
+pairings.each do |p| 
+	response = HTTParty.get(
+		link, 
+		:query => {'symbol' => p}, 
+		:headers => {'X-CMC_PRO_API_KEY' => ENV["CMC_API_KEY"], 'Content-Type' => 'application/json'}
 		)
+	if response["status"]["error_code"] == 0
+		Coin.create!(
+			name: response["data"][p]['name'], 
+			symbol: response["data"][p]['symbol'], 
+			web_id: response["data"][p]['slug']
+			)
+		puts "#{p} has been seeded into the database."
+	else
+		puts "#{p} is not in the CoinMarketCap system."
+	end
+	sleep(1) # Too many API calls
 end
 
 puts "CoinMarketCap API successfully seeded into database."
