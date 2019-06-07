@@ -37,7 +37,7 @@ class TransactionsController < ApplicationController
   end
 
   def new
-  	@coins = Coin.all
+  	@coins = Coin.order(:name)
   	@transaction = @user.transactions.build
   end
 
